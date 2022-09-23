@@ -19,6 +19,6 @@ public class Address
 
     public override string? ToString()
     {
-        return $"{Name} {Surname}   {Street},{City},{Province} {ZIPCode}";
+        return $"{Name} {Surname} - {Street},{City},{Province} {ZIPCode}";
     }
 }

@@ -3,43 +3,46 @@ string Path = "../../../addresses.csv";
 List<Address> addresses = new List<Address>();
 StreamReader? file = null;
 
+file = File.OpenText(Path);
 
-try
+file.ReadLine();
+
+while (!file.EndOfStream)
 {
-    file = File.OpenText(Path);
-    file.ReadLine();
+    string? Line = file.ReadLine();
+    string[] singlePartLine = Line.Split(",");
 
-    while (!file.EndOfStream)
+    try
     {
-        string? Line = file.ReadLine();
-        string[] singlePartLine = Line.Split(",");
 
-        if( singlePartLine.Length != 6 && singlePartLine.Length <= 6 )
-        {
-            continue;
-        }
+
+        //if (singlePartLine.Length != 6 )
+        //{
+        //    Console.WriteLine("il formato non è correto");
+        //    continue;
+        //}
         string name = singlePartLine[0];
         string surname = singlePartLine[1];
         string street = singlePartLine[2];
         string city = singlePartLine[3];
-        string? province = singlePartLine[4];
+        string province = singlePartLine[4];
         string zipCode = singlePartLine[5];
 
-        addresses.Add(new Address(name, surname, street, city, province, zipCode));
-    }
-}
-catch (FileNotFoundException)
-{
-    Console.WriteLine("File non trovato");
-}
-finally
-{
-    if (file != null)
-    {
-        foreach (Address address in addresses)
-        {
-            Console.WriteLine(address.ToString());
-        }
 
+        Address address = new Address(name, surname, street, city, province, zipCode);
+        addresses.Add(address);
+        //addresses.Add(new Address(name, surname, street, city, province, zipCode));
+        Console.WriteLine(address);
     }
+
+
+    catch (Exception e)
+    {
+        Console.WriteLine("---ERROR---- ");
+        Console.WriteLine(Line);
+        Console.WriteLine("-------");
+    }
+
+    //addresses.ForEach(Console.WriteLine);
 }
+file.Close();
